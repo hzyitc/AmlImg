@@ -113,7 +113,7 @@ func pack(filePath, dirPath string) error {
 	defer cmdfile.Close()
 
 	scanner := bufio.NewScanner(cmdfile)
-	scanner.Split(bufio.ScanWords)
+	scanner.Split(bufio.ScanLines)
 
 	for scanner.Scan() {
 		txt := scanner.Text()
