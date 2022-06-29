@@ -29,7 +29,7 @@ func NewReader(path string, check bool) (*ImageReader, error) {
 	}
 
 	if header.Magic != Magic {
-		return nil, fmt.Errorf("incorrect crc: should %08X but is %08X", Magic, header.Magic)
+		return nil, fmt.Errorf("incorrect magic: should %08X but is %08X", Magic, header.Magic)
 	}
 
 	if check {
