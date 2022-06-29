@@ -1,4 +1,4 @@
-package AmlImg
+package AmlCRC
 
 import "hash/crc32"
 

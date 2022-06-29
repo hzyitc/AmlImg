@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PROGRAM="AmlImg"
-CLI="./cli"
+CLI="./"
 OUTPUT="bin/"
 LDFLAGS="-s -w"
 

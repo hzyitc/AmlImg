@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/hzyitc/AmlImg/AmlCRC"
 )
 
 type ImageReader struct {
@@ -42,7 +44,7 @@ func NewReader(path string, check bool) (*ImageReader, error) {
 		var buf [4096]byte
 		for {
 			n, err := file.Read(buf[:])
-			crc = AmlCRC(crc, buf[:n])
+			crc = AmlCRC.AmlCRC(crc, buf[:n])
 			if errors.Is(err, io.EOF) {
 				break
 			} else if err != nil {
