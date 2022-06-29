@@ -28,7 +28,7 @@ func main() {
 
 	switch os.Args[1] {
 	case "unpack":
-		os.MkdirAll(os.Args[3], 755)
+		os.MkdirAll(os.Args[3], 0755)
 
 		err := unpack(os.Args[2], os.Args[3])
 		if err != nil {
