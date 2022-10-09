@@ -18,7 +18,7 @@ func usage() {
 func main() {
 	if len(os.Args) != 4 {
 		usage()
-		return
+		os.Exit(1)
 	}
 
 	switch os.Args[1] {
@@ -28,14 +28,14 @@ func main() {
 		err := unpack(os.Args[2], os.Args[3])
 		if err != nil {
 			println(err.Error())
-			return
+			os.Exit(1)
 		}
 
 	case "pack":
 		err := pack(os.Args[2], os.Args[3])
 		if err != nil {
 			println(err.Error())
-			return
+			os.Exit(1)
 		}
 	case "res_unpack":
 		os.MkdirAll(os.Args[3], 0755)
@@ -43,14 +43,14 @@ func main() {
 		err := res_unpack(os.Args[2], os.Args[3])
 		if err != nil {
 			println(err.Error())
-			return
+			os.Exit(1)
 		}
 
 	case "res_pack":
 		err := res_pack(os.Args[2], os.Args[3])
 		if err != nil {
 			println(err.Error())
-			return
+			os.Exit(1)
 		}
 	}
 }
