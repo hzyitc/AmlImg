@@ -1,0 +1,54 @@
+name: 构建AmlImg打包工具【USB_Burning_Tool】
+
+on:
+  #自动编译：每天早上4点
+  #schedule:
+    #- cron: 0 20 * * *
+  #手动编译
+  workflow_dispatch:
+
+#CI权限
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检查项目
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: 开始设置
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+
+      - name: 构建
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWRT_DATE: $(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+        run: bash ./buildAllPlatforms.sh
+
+          #信息
+          export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+          echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+          
+      - name: 整理固件
+        run: |
+          mkdir -p outfile
+          sudo cp build/* ./outfile
+
+      - name: 上传AmlImg
+        uses: rmoyulong/action-gh-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: Onecloud_AmlImg_${{ env.OWRT_DATE }}
+          files: outfile/*
+          body: |
+            自用玩客云AmlImg打包工具！刷写底包将抹去所有信息！
+            =============基本信息============
+
+            源码：https://github.com/hzyitc/AmlImg
+            平台：liunx/armv7
